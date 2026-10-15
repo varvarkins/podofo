@@ -13,20 +13,20 @@ namespace utls
     template <typename... Args>
     inline static std::string Format(const std::string_view& fmt, const Args&... args)
     {
-        return std::vformat(fmt, std::make_format_args(args...));
+        return std::format(std::runtime_format(fmt), args...);
     }
 
     template <typename... Args>
     inline static void FormatTo(std::string& dst, const std::string_view& fmt, const Args&... args)
     {
         dst.clear();
-        std::vformat_to(std::back_inserter(dst), fmt, std::make_format_args(args...));
+        std::format_to(std::back_inserter(dst), std::runtime_format(fmt), args...);
     }
 
     template <typename... Args>
     inline static void FormatTo(char* dst, size_t n, const std::string_view& fmt, const Args&... args)
     {
-        std::format_to_n(dst, n, "{}", std::vformat(fmt, std::make_format_args(args...)));
+        std::format_to_n(dst, n, std::runtime_format(fmt), args...);
     }
 
     /// Helper class. Use COMMON_FORMAT macro instead
@@ -56,7 +56,7 @@ namespace utls
         template <typename... Args>
         inline static std::string TryFormat(const std::string_view& fmt, const Args&... args)
         {
-            return std::vformat(fmt, std::make_format_args(args...));
+            return std::format(std::runtime_format(fmt), args...);
         }
     };
 }
